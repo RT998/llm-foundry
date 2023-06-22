@@ -140,12 +140,12 @@ def main(cfg):
             row.update({
                 'average': composite_scores[f'metrics/model_gauntlet/average']
             })
-            taxonomy_df = pd.concat(
-                [taxonomy_df, pd.DataFrame([row])], ignore_index=True)
+            model_gauntlet_df = pd.concat(
+                [model_gauntlet_df, pd.DataFrame([row])], ignore_index=True)
 
             print(f'Printing gauntlet results for all models')
             print(
-                taxonomy_df.sort_values(
+                model_gauntlet_df.sort_values(
                     'average', ascending=False).to_markdown(index=False))
             print(f'Printing complete results for all models')
             print(models_df.to_markdown(index=False))
@@ -153,7 +153,7 @@ def main(cfg):
             print(
                 f'Got exception: {str(e)} while evaluating {model_cfg}. Continuing to next model.',
                 flush=True)
-            continue
+            raise e
 
 
 def calculate_markdown_results(logger_keys, logger_data, benchmark_to_taxonomy,
